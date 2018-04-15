@@ -43,6 +43,10 @@ resource "random_id" "database-name-postfix" {
   byte_length = 8
 }
 
+resource "random_id" "cloud-storage-bucket" {
+  byte_length = 8
+}
+
 variable "concourse_version" {
   description = "The version on concourse to deploy"
 }
