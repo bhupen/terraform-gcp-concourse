@@ -38,6 +38,8 @@ resource "google_compute_instance" "concourse-worker-1" {
   service_account {
     scopes = ["cloud-platform"]
   }
+
+  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
 }
 
 resource "google_compute_instance" "concourse-worker-2" {
@@ -69,6 +71,8 @@ resource "google_compute_instance" "concourse-worker-2" {
   service_account {
     scopes = ["cloud-platform"]
   }
+
+  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
 }
 
 resource "google_compute_instance" "concourse-worker-3" {
@@ -100,4 +104,6 @@ resource "google_compute_instance" "concourse-worker-3" {
   service_account {
     scopes = ["cloud-platform"]
   }
+
+  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
 }

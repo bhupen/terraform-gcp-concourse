@@ -35,7 +35,7 @@ wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /home/ubuntu/
 chmod +x /home/ubuntu/cloud_sql_proxy
 touch /var/log/sql-proxy.log
 chmod 666 /var/log/sql-proxy.log
-/home/ubuntu/cloud_sql_proxy -instances=${project_id}:${region}:${database_identifier}=tcp:5432 -credential_file=/home/ubuntu/key.json 1>/var/log/sql-proxy.log 2>&1 &
+/home/ubuntu/cloud_sql_proxy -instances=${project_id}:${region}:${database_identifier},${project_id}:${region}:${database_replica}=tcp:5432 -credential_file=/home/ubuntu/key.json 1>/var/log/sql-proxy.log 2>&1 &
 
 touch /var/log/concourse-web.log
 chmod 666 /var/log/concourse-web.log

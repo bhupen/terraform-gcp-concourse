@@ -50,3 +50,8 @@ resource "random_id" "cloud-storage-bucket" {
 variable "concourse_version" {
   description = "The version on concourse to deploy"
 }
+
+variable "env" {
+  description = "Environment"
+  type        = "string"
+}

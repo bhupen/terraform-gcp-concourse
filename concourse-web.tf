@@ -5,6 +5,7 @@ data "template_file" "concourse_web_init" {
     database_username   = "concourse"
     database_password   = "concourse"
     database_identifier = "${google_sql_database_instance.concourse.name}"
+    database_replica    = "${google_sql_database_instance.concourse_replica.name}"
     database_name       = "${google_sql_database.concourse.name}"
     keys_bucket         = "${google_storage_bucket.keys-bucket.name}"
     project_id          = "${var.project_id}"
@@ -37,12 +38,15 @@ resource "google_compute_instance" "concourse-web" {
   metadata_startup_script = "${data.template_file.concourse_web_init.rendered}"
 
   tags = ["internal"]
+
   boot_disk {
     initialize_params {
       image = "${var.latest_ubuntu}"
     }
   }
+
   allow_stopping_for_update = true
+
   network_interface {
     subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
     subnetwork_project = "${var.network_project_id}"
@@ -51,7 +55,10 @@ resource "google_compute_instance" "concourse-web" {
       // Ephemeral IP
     }
   }
+
   service_account {
     scopes = ["cloud-platform"]
   }
+
+  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.bastion-host"]
 }

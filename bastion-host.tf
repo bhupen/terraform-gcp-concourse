@@ -37,4 +37,6 @@ resource "google_compute_instance" "bastion-host" {
     email  = "${var.service_account_email}"
     scopes = ["cloud-platform"]
   }
+
+  depends_on = ["google_storage_bucket.keys-bucket"]
 }
