@@ -19,6 +19,8 @@ data "template_file" "concourse_web_init" {
 resource "google_service_account" "cloud-proxy" {
   account_id   = "concourse-proxy"
   display_name = "concourse-proxy"
+
+  depends_on = ["google_sql_database_instance.concourse"]
 }
 
 resource "google_project_iam_binding" "cloud-proxy" {
@@ -28,6 +30,8 @@ resource "google_project_iam_binding" "cloud-proxy" {
   members = [
     "serviceAccount:concourse-proxy@${var.project_id}.iam.gserviceaccount.com",
   ]
+
+  depends_on = ["google_service_account.cloud-proxy"]
 }
 
 resource "google_compute_instance" "concourse-web" {
@@ -60,5 +64,5 @@ resource "google_compute_instance" "concourse-web" {
     scopes = ["cloud-platform"]
   }
 
-  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.bastion-host"]
+  depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.bastion-host", "google_project_iam_binding.cloud-proxy"]
 }
