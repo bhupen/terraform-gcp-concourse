@@ -7,6 +7,7 @@ network_project_id = "network_project_id"
 region = "region"
 zone = "zone"
 concourse_version = "v3.10.0"
+env = "dev"
 ```
 
 To Apply

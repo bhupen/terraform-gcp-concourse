@@ -60,6 +60,8 @@ resource "google_sql_database_instance" "concourse_replica" {
       update_track = "stable"
     }
   }
+
+  depends_on = ["google_sql_database_instance.concourse"]
 }
 
 resource "google_sql_database" "concourse" {
