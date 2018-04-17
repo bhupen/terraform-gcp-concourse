@@ -65,3 +65,17 @@ resource "google_compute_firewall" "nexus" {
   target_tags = ["nexus"]
   project     = "${var.network_project_id}"
 }
+
+// Allow http to concourse-web
+resource "google_compute_firewall" "concourse-web" {
+  name    = "${var.prefix}concourse-web"
+  network = "${google_compute_network.concourse.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  target_tags = ["concourse-web"]
+  project     = "${var.network_project_id}"
+}
