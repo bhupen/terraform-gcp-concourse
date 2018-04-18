@@ -2,7 +2,7 @@ data "template_file" "nexus_init" {
   template = "${file("nexus/nexus.tpl")}"
 
   vars {
-    blob_store_bucket       = "${google_storage_bucket.blob-store-bucket.name}"
+    keys_bucket       = "${google_storage_bucket.keys-bucket.name}"
   }
 }
 
@@ -36,5 +36,5 @@ resource "google_compute_instance" "nexus" {
     scopes = ["cloud-platform"]
   }
 
-  depends_on = ["google_storage_bucket.blob-store-bucket"]
+  depends_on = ["google_storage_bucket.keys-bucket"]
 }
