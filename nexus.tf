@@ -1,5 +1,5 @@
 data "template_file" "nexus_init" {
-  template = "${file("nexus/nexus.tpl")}"
+  template = "${file("nexus.tpl")}"
 
   vars {
     keys_bucket       = "${google_storage_bucket.keys-bucket.name}"
@@ -22,7 +22,7 @@ resource "google_compute_instance" "nexus" {
   }
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.nexus-subnet.name}"
+    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {
