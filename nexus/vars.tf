@@ -33,3 +33,7 @@ variable "baseip" {
   default     = "10.1.0.0"
 }
 
+resource "random_id" "cloud-storage-bucket" {
+  byte_length = 8
+}
+
