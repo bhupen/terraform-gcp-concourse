@@ -10,14 +10,8 @@ concourse_version = "v3.10.0"
 env = "dev"
 ```
 
-Concourse files moved to concourse directory:
-To Plan Concourse:
-terraform plan -state=concourse/concourse.tfstate -var-file="test.tfvars" concourse
-To Apply Concourse:
-terraform apply -state=concourse/concourse.tfstate -var-file="test.tfvars" concourse
 
-Nexus files moved to nexus directory:
-To Plan Nexus:
-terraform plan -state=nexus/nexus.tfstate -var-file="test.tfvars" nexus
-To Apply Nexus:
-terraform apply -state=nexus/nexus.tfstate -var-file="test.tfvars" nexus
+To Apply
+```terraform
+terraform apply -var-file="test.tfvars"
+```
