@@ -1,5 +1,5 @@
 data "template_file" "concourse_worker_init" {
-  template = "${file("concourse-worker.tpl")}"
+  template = "${file("concourse/concourse-worker.tpl")}"
 
   vars {
     tsa_host          = "${google_compute_instance.concourse-web.network_interface.0.address}"

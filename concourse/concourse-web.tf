@@ -1,5 +1,5 @@
 data "template_file" "concourse_web_init" {
-  template = "${file("concourse-web.tpl")}"
+  template = "${file("concourse/concourse-web.tpl")}"
 
   vars {
     database_username   = "concourse"

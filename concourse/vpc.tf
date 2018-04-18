@@ -52,28 +52,14 @@ resource "google_compute_firewall" "intra-subnet-open" {
   source_tags = ["internal"]
 }
 
-// Allow http to nexus
-resource "google_compute_firewall" "nexus" {
-  name    = "${var.prefix}nexus"
-  network = "${google_compute_network.concourse.name}"
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
-  }
-
-  target_tags = ["nexus"]
-  project     = "${var.network_project_id}"
-}
-
-// Allow http to concourse-web
+// Allow https to concourse-web
 resource "google_compute_firewall" "concourse-web" {
   name    = "${var.prefix}concourse-web"
   network = "${google_compute_network.concourse.name}"
 
   allow {
     protocol = "tcp"
-    ports    = ["80"]
+    ports    = ["443"]
   }
 
   target_tags = ["concourse-web"]

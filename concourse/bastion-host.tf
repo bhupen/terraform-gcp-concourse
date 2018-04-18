@@ -1,5 +1,5 @@
 data "template_file" "bastion_host_init" {
-  template = "${file("bastion-host.tpl")}"
+  template = "${file("concourse/bastion-host.tpl")}"
 
   vars {
     concourse_version = "${var.concourse_version}"
