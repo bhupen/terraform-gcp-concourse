@@ -30,7 +30,7 @@ resource "google_project_iam_member" "cloud-proxy" {
 
 resource "google_compute_instance" "concourse-web" {
   name         = "concourse-web"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "${var.zone}"
 
   metadata_startup_script = "${data.template_file.concourse_web_init.rendered}"

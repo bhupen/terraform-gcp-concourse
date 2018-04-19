@@ -22,7 +22,7 @@ resource "google_project_iam_member" "concourse-worker" {
 
 resource "google_compute_instance" "concourse-worker-1" {
   name         = "concourse-worker-1"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "${var.zone}"
 
   metadata_startup_script = "${data.template_file.concourse_worker_init.rendered}"
@@ -56,7 +56,7 @@ resource "google_compute_instance" "concourse-worker-1" {
 
 resource "google_compute_instance" "concourse-worker-2" {
   name         = "concourse-worker-2"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "${var.zone}"
 
   metadata_startup_script = "${data.template_file.concourse_worker_init.rendered}"
@@ -90,7 +90,7 @@ resource "google_compute_instance" "concourse-worker-2" {
 
 resource "google_compute_instance" "concourse-worker-3" {
   name         = "concourse-worker-3"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "${var.zone}"
 
   metadata_startup_script = "${data.template_file.concourse_worker_init.rendered}"
