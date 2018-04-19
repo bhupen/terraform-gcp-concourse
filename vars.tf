@@ -55,8 +55,3 @@ variable "env" {
   description = "Environment"
   type        = "string"
 }
-
-variable "filter" {
-  description = "StackDriver export Filter"
-  type        = "string"
-}
