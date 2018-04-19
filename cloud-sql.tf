@@ -9,7 +9,7 @@ resource "google_sql_database_instance" "concourse" {
   project          = "${var.project_id}"
 
   settings {
-    tier = "db-f1-micro"
+    tier = "db-g1-small"
 
     availability_type = "REGIONAL"
 
@@ -43,7 +43,7 @@ resource "google_sql_database_instance" "concourse_replica" {
   master_instance_name = "${google_sql_database_instance.concourse.name}"
 
   settings {
-    tier                   = "db-f1-micro"
+    tier                   = "db-g1-small"
     crash_safe_replication = "true"
 
     location_preference {

@@ -33,10 +33,5 @@ resource "google_compute_instance" "bastion-host" {
 
   metadata_startup_script = "${data.template_file.bastion_host_init.rendered}"
 
-  service_account {
-    email  = "${var.service_account_email}"
-    scopes = ["cloud-platform"]
-  }
-
   depends_on = ["google_storage_bucket.keys-bucket"]
 }

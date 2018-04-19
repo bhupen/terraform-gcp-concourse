@@ -9,6 +9,17 @@ data "template_file" "concourse_worker_init" {
   }
 }
 
+resource "google_service_account" "concourse-worker" {
+  account_id   = "concourse-worker"
+  display_name = "concourse-worker"
+}
+
+resource "google_project_iam_member" "concourse-worker" {
+  project = "${var.project_id}"
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.concourse-worker.email}"
+}
+
 resource "google_compute_instance" "concourse-worker-1" {
   name         = "concourse-worker-1"
   machine_type = "g1-small"
@@ -17,7 +28,7 @@ resource "google_compute_instance" "concourse-worker-1" {
   metadata_startup_script = "${data.template_file.concourse_worker_init.rendered}"
 
   tags = ["internal"]
-
+  
   boot_disk {
     initialize_params {
       image = "${var.latest_ubuntu}"
@@ -37,6 +48,7 @@ resource "google_compute_instance" "concourse-worker-1" {
 
   service_account {
     scopes = ["cloud-platform"]
+    email = "${google_service_account.concourse-worker.email}"
   }
 
   depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
@@ -70,6 +82,7 @@ resource "google_compute_instance" "concourse-worker-2" {
 
   service_account {
     scopes = ["cloud-platform"]
+    email = "${google_service_account.concourse-worker.email}"
   }
 
   depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
@@ -103,6 +116,7 @@ resource "google_compute_instance" "concourse-worker-3" {
 
   service_account {
     scopes = ["cloud-platform"]
+    email = "${google_service_account.concourse-worker.email}"
   }
 
   depends_on = ["google_sql_database_instance.concourse", "google_compute_instance.concourse-web"]
