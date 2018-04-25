@@ -11,7 +11,7 @@ data "template_file" "concourse_web_init" {
     project_id          = "${var.project_id}"
     region              = "${var.region}"
 
-    external-url      = "http://localhost/"
+    external-url      = "https://localhost/"
     concourse_version = "${var.concourse_version}"
   }
 }
