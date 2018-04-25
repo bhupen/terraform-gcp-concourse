@@ -41,8 +41,8 @@ Illinois
 Chicago
 CNA
 CNAX
-Amy Breese
-amy.breese@cna.com
+xpteam
+CNAXDevTeam@cnahardy.com
 XP5432xp
 
 EOF
