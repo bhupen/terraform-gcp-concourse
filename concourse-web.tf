@@ -11,7 +11,7 @@ data "template_file" "concourse_web_init" {
     project_id          = "${var.project_id}"
     region              = "${var.region}"
 
-    external-url      = "http://localhost/"
+    external-url      = "https://localhost/"
     concourse_version = "${var.concourse_version}"
   }
 }
@@ -41,7 +41,7 @@ resource "google_compute_instance" "concourse-web" {
 
   metadata_startup_script = "${data.template_file.concourse_web_init.rendered}"
 
-  tags = ["internal"]
+  tags = ["concourse-web", "internal"]
 
   boot_disk {
     initialize_params {
