@@ -51,3 +51,17 @@ resource "google_compute_firewall" "intra-subnet-open" {
 
   source_tags = ["internal"]
 }
+
+// Allow http to concourse-web
+resource "google_compute_firewall" "concourse-web" {
+  name    = "${var.prefix}concourse-web"
+  network = "${google_compute_network.concourse.name}"
+  
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  target_tags = ["concourse-web"]
+  project     = "${var.network_project_id}"
+}
