@@ -39,6 +39,25 @@ resource "google_compute_instance" "concourse-web" {
   machine_type = "g1-small"
   zone         = "${var.zone}"
 
+  provisioner "local-exec" {
+    command = <<EOT
+      openssl genrsa -out concourse-web.key 2048
+      openssl req -new -key concourse-web.key -out concourse-web.csr <<EOF
+US
+Illinois
+Chicago
+CNA
+CNAX
+xpteam
+CNAXDevTeam@cnahardy.com
+XP5432xp
+
+EOF
+      openssl x509 -req -days 365 -in concourse-web.csr -signkey concourse-web.key -out concourse-web.crt
+      gsutil cp concourse-web.crt concourse-web.csr concourse-web.key gs://${google_storage_bucket.keys-bucket.name}/keys/web
+    EOT
+  }
+
   metadata_startup_script = "${data.template_file.concourse_web_init.rendered}"
 
   tags = ["concourse-web", "internal"]

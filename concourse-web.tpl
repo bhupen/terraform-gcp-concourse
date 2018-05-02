@@ -31,23 +31,8 @@ if [ ! -f /home/ubuntu/key.json ]; then
     gcloud iam service-accounts keys create /home/ubuntu/key.json --iam-account concourse-proxy@${project_id}.iam.gserviceaccount.com
 fi
 
-gsutil ls gs://concourse-3b4acc437c1053fa/
-if [ ! -f ssl_cert/concourse-web.csr ]; then
-    mkdir ssl_cert
-    openssl genrsa -out ssl_cert/concourse-web.key 2048
-    openssl req -new -key ssl_cert/concourse-web.key -out ssl_cert/concourse-web.csr <<EOF
-US
-Illinois
-Chicago
-CNA
-CNAX
-xpteam
-CNAXDevTeam@cnahardy.com
-XP5432xp
-
-EOF
-    openssl x509 -req -days 365 -in ssl_cert/concourse-web.csr -signkey ssl_cert/concourse-web.key -out ssl_cert/concourse-web.crt
-fi
+mkdir ssl_cert
+gsutil cp gs://${keys_bucket}/keys/web/concourse-web.* ssl_cert
 
 wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /home/ubuntu/cloud_sql_proxy
 chmod +x /home/ubuntu/cloud_sql_proxy
