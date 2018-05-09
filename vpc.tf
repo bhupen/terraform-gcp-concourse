@@ -29,6 +29,20 @@ resource "google_compute_firewall" "bastion-host" {
   project     = "${var.network_project_id}"
 }
 
+// Allow SSH to BOSH bastion
+resource "google_compute_firewall" "concourse-web" {
+  name    = "${var.prefix}concourse-web"
+  network = "${google_compute_network.concourse.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  target_tags = ["concourse-web"]
+  project     = "${var.network_project_id}"
+}
+
 // Allow all traffic within subnet
 resource "google_compute_firewall" "intra-subnet-open" {
   name    = "${var.prefix}intra-subnet-open"

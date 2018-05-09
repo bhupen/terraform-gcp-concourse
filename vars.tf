@@ -55,3 +55,13 @@ variable "env" {
   description = "Environment"
   type        = "string"
 }
+
+variable "credentials" {
+  description = "Credentials file location"
+  type        = "string"
+}
+
+variable "number_of_workers" {
+  description = "Number of Concourse workers."
+  type = "string"
+}

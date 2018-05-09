@@ -8,7 +8,9 @@ if ! which concourse; then
   mv concourse /usr/local/bin/concourse
 fi
 
-while [ `gsutil ls gs://${keys_bucket}/keys/web/tsa_host_key | grep tsa_host_key.pub -c` -eq 0 ]
+sudo -u ubuntu gsutil cp gs://${keys_bucket}/id_rsa.pub /home/ubuntu/.ssh/authorized_keys
+
+while [ `gsutil ls gs://${keys_bucket}/keys/web | grep tsa_host_key.pub -c` -eq 0 ]
 do
     echo "sleeping"
     sleep 10
@@ -24,10 +26,17 @@ chmod 666 /var/log/concourse_worker.log
 
 export CONCOURSE_BAGGAGECLAIM_DRIVER="native"
 
-/usr/local/bin/concourse worker \
+gcloud iam service-accounts keys create /home/ubuntu/key.json --iam-account terraform@${project_id}.iam.gserviceaccount.com
+
+apt-get update
+apt-get --assume-yes install jq
+apt-get clean 
+
+export GIT_PASS_KEY=`cat /home/ubuntu/key.json | jq -r -c '.' | sed -e 's/\"/\\\"/g'`
+
+sudo /usr/local/bin/concourse worker \
 --work-dir /opt/concourse/worker \
---tsa-host ${tsa_host} \
---tsa-port ${tsa_port} \
+--tsa-host ${tsa_host}:2222 \
 --tsa-public-key /home/ubuntu/keys/worker/tsa_host_key.pub \
 --tsa-worker-private-key /home/ubuntu/keys/worker/worker_key \
 2>&1 > /var/log/concourse_worker.log &
