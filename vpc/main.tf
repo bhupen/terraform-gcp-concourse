@@ -57,11 +57,10 @@ resource "google_compute_firewall" "intra-subnet-open" {
 resource "google_compute_firewall" "concourse-web" {
   name    = "${var.prefix}concourse-web"
   network = "${google_compute_network.concourse.name}"
-  source_ranges = ["159.10.134.170/32","74.125.0.0/16","173.194.0.0/16"]
-  
+
   allow {
     protocol = "tcp"
-    ports    = ["443","22"]
+    ports    = ["443"]
   }
 
   target_tags = ["concourse-web"]
