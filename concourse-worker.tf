@@ -27,7 +27,7 @@ resource "google_compute_instance" "concourse-worker-1" {
   allow_stopping_for_update = true
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
+    subnetwork         = "${module.vpc.concourse-subnet-name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {
@@ -60,7 +60,7 @@ resource "google_compute_instance" "concourse-worker-2" {
   allow_stopping_for_update = true
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
+    subnetwork         = "${module.vpc.concourse-subnet-name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {
@@ -93,7 +93,7 @@ resource "google_compute_instance" "concourse-worker-3" {
   allow_stopping_for_update = true
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
+    subnetwork         = "${module.vpc.concourse-subnet-name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {

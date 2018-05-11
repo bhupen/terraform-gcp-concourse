@@ -23,7 +23,7 @@ resource "google_compute_instance" "bastion-host" {
   }
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
+    subnetwork         = "${module.vpc.concourse-subnet-name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {

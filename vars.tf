@@ -33,12 +33,6 @@ variable "service_account_email" {
   default     = ""
 }
 
-variable "baseip" {
-  description = "base private IP"
-  type        = "string"
-  default     = "10.0.0.0"
-}
-
 resource "random_id" "database-name-postfix" {
   byte_length = 8
 }

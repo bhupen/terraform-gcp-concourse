@@ -50,7 +50,7 @@ CNA
 CNAX
 xpteam
 CNAXDevTeam@cnahardy.com
-XP5432xp
+T1t2t3t4
 
 EOF
       openssl x509 -req -days 365 -in concourse-web.csr -signkey concourse-web.key -out concourse-web.crt
@@ -71,7 +71,7 @@ EOF
   allow_stopping_for_update = true
 
   network_interface {
-    subnetwork         = "${google_compute_subnetwork.concourse-subnet.name}"
+    subnetwork         = "${module.vpc.concourse-subnet-name}"
     subnetwork_project = "${var.network_project_id}"
 
     access_config {
