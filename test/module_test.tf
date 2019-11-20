@@ -1,10 +1,10 @@
 variable "project_id" {
-  type = "string"
+  type = string
 }
 
 variable "region" {
   description = "Region to deploy in"
-  type        = "string"
+  type        = string
 }
 
 variable "concourse_version" {
@@ -13,17 +13,17 @@ variable "concourse_version" {
 
 variable "env" {
   description = "Environment"
-  type        = "string"
+  type        = string
 }
 
 variable "credentials" {
   description = "Credentials file location"
-  type        = "string"
+  type        = string
 }
 
 variable "number_of_workers" {
   description = "Number of Concourse workers."
-  type        = "string"
+  type        = string
 }
 
 provider "google" {
