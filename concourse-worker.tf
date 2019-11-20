@@ -2,7 +2,7 @@ data "template_file" "concourse_worker_init" {
   template = "${file(format("%s/%s", path.module, "concourse-worker.tpl"))}"
 
   vars = {
-    tsa_host              = google_compute_instance.concourse-web.network_interface.0.address
+    tsa_host              = google_compute_instance.concourse-web.network_interface.0.access_config.0.nat_ip
     tsa_port              = "2222"
     keys_bucket           = google_storage_bucket.keys-bucket.name
     concourse_version     = var.concourse_version
