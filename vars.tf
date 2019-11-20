@@ -1,41 +1,41 @@
 variable "latest_ubuntu" {
-  type    = "string"
+  type    = string
   default = "ubuntu-1404-trusty-v20180308"
 }
 
 variable "project_id" {
-  type = "string"
+  type = string
 }
 
 variable "network_project_id" {
-  type = "string"
+  type = string
 }
 
 variable "region" {
   description = "Region to deploy in"
-  type        = "string"
+  type        = string
 }
 
 variable "zone" {
   description = "Zone to deploy in"
-  type        = "string"
+  type        = string
 }
 
 variable "prefix" {
   description = "Environment entity prefix"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
 variable "service_account_email" {
   description = "service account email"
-  type        = "string"
+  type        = string
   default     = ""
 }
 
 variable "baseip" {
   description = "base private IP"
-  type        = "string"
+  type        = string
   default     = "10.0.0.0"
 }
 
@@ -53,15 +53,15 @@ variable "concourse_version" {
 
 variable "env" {
   description = "Environment"
-  type        = "string"
+  type        = string
 }
 
 variable "credentials" {
   description = "Credentials file location"
-  type        = "string"
+  type        = string
 }
 
 variable "number_of_workers" {
   description = "Number of Concourse workers."
-  type = "string"
+  type = string
 }

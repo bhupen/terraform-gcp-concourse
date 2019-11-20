@@ -1,12 +1,12 @@
 locals {
-  name_prefix = "${format("%s-%s-%s-%s", "concourse", var.env, var.region, random_id.database-name-postfix.hex)}"
+  name_prefix = "${"concourse"}-${var.env}-${var.region}-${random_id.database-name-postfix.hex}"
 }
 
 resource "google_sql_database_instance" "concourse" {
-  name             = "${format("%s-master", local.name_prefix)}"
-  region           = "${var.region}"
+  name             = "${local.name_prefix}-master"
+  region           = var.region
   database_version = "POSTGRES_9_6"
-  project          = "${var.project_id}"
+  project          = var.project_id
 
   settings {
     tier = "db-f1-micro"
@@ -14,7 +14,7 @@ resource "google_sql_database_instance" "concourse" {
     availability_type = "REGIONAL"
 
     location_preference {
-      zone = "${format("%s-%s", var.region, "a")}"
+      zone = "${var.region}-a"
     }
 
     ip_configuration {
@@ -36,18 +36,18 @@ resource "google_sql_database_instance" "concourse" {
 }
 
 resource "google_sql_database_instance" "concourse_replica" {
-  name                 = "${format("%s-replica", local.name_prefix)}"
-  region               = "${var.region}"
-  database_version     = "${google_sql_database_instance.concourse.database_version}"
-  project              = "${var.project_id}"
-  master_instance_name = "${google_sql_database_instance.concourse.name}"
+  name                 = "${local.name_prefix}-replica"
+  region               = var.region
+  database_version     = google_sql_database_instance.concourse.database_version
+  project              = var.project_id
+  master_instance_name = google_sql_database_instance.concourse.name
 
   settings {
     tier                   = "db-f1-micro"
     crash_safe_replication = "true"
 
     location_preference {
-      zone = "${format("%s-%s", var.region, "c")}"
+      zone = "${var.region}-c"
     }
 
     ip_configuration {
@@ -61,22 +61,22 @@ resource "google_sql_database_instance" "concourse_replica" {
     }
   }
 
-  depends_on = ["google_sql_database_instance.concourse"]
+  depends_on = [google_sql_database_instance.concourse]
 }
 
 resource "google_sql_database" "concourse" {
   name     = "concourse"
-  instance = "${google_sql_database_instance.concourse.name}"
-  project  = "${var.project_id}"
+  instance = google_sql_database_instance.concourse.name
+  project  = var.project_id
 
-  depends_on = ["google_sql_database_instance.concourse"]
+  depends_on = [google_sql_database_instance.concourse]
 }
 
 resource "google_sql_user" "users" {
   name       = "concourse"
-  instance   = "${google_sql_database_instance.concourse.name}"
+  instance   = google_sql_database_instance.concourse.name
   password   = "concourse"
   host       = "cloudsqlproxy~%"
-  project    = "${var.project_id}"
-  depends_on = ["google_sql_database.concourse"]
+  project    = var.project_id
+  depends_on = [google_sql_database.concourse]
 }
